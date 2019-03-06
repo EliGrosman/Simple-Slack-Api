@@ -1,0 +1,16 @@
+{
+  "name": "simple-slack-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "slack.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "eslint --ignore-path .gitignore ."
+  },
+  "author": "Eli Grosman",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-strongloop": "^2.1.0"
+  }
+}
