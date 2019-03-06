@@ -5,8 +5,8 @@ const crypto = require('crypto');
 const timingSafeCompare = require('tsscmp');
 const users = require('./users.js');
 
-let ACCESS_TOKEN, SIGNING_SECRET, VERIFICATION_TOKEN;
-let isInit = false;
+let ACCESS_TOKEN, SIGNING_SECRET, VERIFICATION_TOKEN; // eslint-disable-line no-unused-vars
+let isInit = false; // eslint-disable-line no-unused-vars
 
 function Slack(ACCESS_TOKEN, SIGNING_SECRET, VERIFICATION_TOKEN) {
 	this.ACCESS_TOKEN = ACCESS_TOKEN;
@@ -39,7 +39,7 @@ Slack.prototype.sendMessage = function sendMessage(text, channelID) {
    axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(message))
    .then(({}))
    .catch((err) => {
-      console.log(err);
+      throw new Error(err)
    });
 }
 
@@ -55,13 +55,13 @@ Slack.prototype.sendEphemeral = function sendEphemeral(text, channelID, userID) 
    axios.post(`${apiUrl}/chat.postEphemeral`, qs.stringify(message))
    .then(({}))
    .catch((err) => {
-      console.log(err);
+      throw new Error(err)
    });
 }
 
 
-Slack.prototype.getUserInfo = function getUserInfo(userid, callback) {
-    const getUserInfo = new Promise((resolve, reject) => {
+Slack.prototype.getUserInfo = function getUserInfo(userid, callback) { 
+    const getUserInfo = new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
       users.find(this.ACCESS_TOKEN, userid).then((result) => {
        resolve(result.data.user.profile.real_name);
        callback(result.data.user.profile);
