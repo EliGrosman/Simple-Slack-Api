@@ -1,6 +1,6 @@
 {
   "name": "simple-slack-api",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "",
   "main": "slack.js",
   "scripts": {
@@ -12,5 +12,11 @@
   "devDependencies": {
     "eslint": "^5.15.1",
     "eslint-config-strongloop": "^2.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "crypto": "^1.0.1",
+    "qs": "^6.6.0",
+    "tsscmp": "^1.0.6"
   }
 }
