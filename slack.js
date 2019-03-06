@@ -1,23 +1,19 @@
 const axios = require('axios');
 const qs = require('qs');
 const apiUrl = 'https://slack.com/api';
-const express = require('express');
 const crypto = require('crypto');
 const timingSafeCompare = require('tsscmp');
-const bodyParser = require('body-parser');
 const users = require('./users.js');
-const app = express();
 
-
-var ACCESS_TOKEN, SIGNING_SECRET, VERIFICATION_TOKEN;
-var isInit = false;
+let ACCESS_TOKEN, SIGNING_SECRET, VERIFICATION_TOKEN;
+let isInit = false;
 
 function Slack(ACCESS_TOKEN, SIGNING_SECRET, VERIFICATION_TOKEN) {
 	this.ACCESS_TOKEN = ACCESS_TOKEN;
 	this.SIGNING_SECRET = SIGNING_SECRET;
 	this.VERIFICATION_TOKEN = VERIFICATION_TOKEN;
 	this.isInit = true;
-};
+}
 
 Slack.prototype.isVerified = function isVerified(req) { 
   const signature = req.headers['x-slack-signature'];
@@ -28,22 +24,20 @@ Slack.prototype.isVerified = function isVerified(req) {
   if (timestamp < fiveMinutesAgo) return false;
   hmac.update(`${version}:${timestamp}:${req.rawBody}`);
   return timingSafeCompare(hmac.digest('hex'), hash);
-}; 
+}
 
-Slack.prototype.sendMessage = function sendMessage(text, channelID, callback) {
+Slack.prototype.sendMessage = function sendMessage(text, channelID) {
 	if(!this.isInit) {
 		throw new Error('Slack not initialized properly. Be sure to provide your slack details.');
 	} 
-	let message = {
-		token: this.ACCESS_TOKEN,
-	 	channel: channelID,
-	 	as_user: false,
-	  	text: text,
+  let message = {
+    token: this.ACCESS_TOKEN,
+    channel: channelID,
+    as_user: false,
+    text: text,
 	}
    axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(message))
-   .then((result => {
-      callback();
-   }))
+   .then(({}))
    .catch((err) => {
       console.log(err);
    });
@@ -59,8 +53,7 @@ Slack.prototype.sendEphemeral = function sendEphemeral(text, channelID, userID) 
       
    };
    axios.post(`${apiUrl}/chat.postEphemeral`, qs.stringify(message))
-   .then((result => {
-   }))
+   .then(({}))
    .catch((err) => {
       console.log(err);
    });
