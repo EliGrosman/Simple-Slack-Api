@@ -37,7 +37,7 @@ Slack.prototype.sendMessage = function sendMessage(text, channelID, callback) {
     text: text,
 	}
    axios.post(`${apiUrl}/chat.postMessage`, qs.stringify(message))
-   .then(function(callback){
+   .then(function(){
     if (typeof callback === "function") {
       callback();
     }
@@ -48,7 +48,10 @@ Slack.prototype.sendMessage = function sendMessage(text, channelID, callback) {
 
 }
 
-Slack.prototype.sendEphemeral = function sendEphemeral(text, channelID, userID) {
+Slack.prototype.sendEphemeral = function sendEphemeral(text, channelID, userID, callback) {
+  if(!this.isInit) {
+		throw new Error('Slack not initialized properly. Be sure to provide your slack details.');
+	} 
 	let message = {
       token: this.ACCESS_TOKEN,
       channel: channelID,
@@ -58,7 +61,7 @@ Slack.prototype.sendEphemeral = function sendEphemeral(text, channelID, userID) 
       
    };
    axios.post(`${apiUrl}/chat.postEphemeral`, qs.stringify(message))
-   .then(function(callback){
+   .then(function(){
     if (typeof callback === "function") {
       callback();
     }
